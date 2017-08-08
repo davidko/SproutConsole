@@ -1,0 +1,3 @@
+[submodule "rpi"]
+	path = rpi
+	url = https://github.com/davidko/Raspberry-Pi-sample-code

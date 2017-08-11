@@ -21,5 +21,6 @@ CREATE TABLE log_entries (
     FOREIGN KEY (log_type) REFERENCES log_types(id),
     data FLOAT,
     text TEXT,
+	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );

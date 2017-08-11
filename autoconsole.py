@@ -59,6 +59,16 @@ class Ph(AsyncI2c):
             callback(float(res.split()[2].rstrip('\0')))
         AsyncI2c.poll(self, interval, cb)
 
+class EC(AsyncI2c):
+    def __init__(self, event_loop):
+        super().__init__(event_loop, 100)
+
+    def poll(self, interval, callback):
+        def cb(res):
+            res_str = res.split()[2]
+            callback( float( res_str.split(',')[0] ) )
+        AsyncI2c.poll(self, interval, cb)
+
 class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
@@ -76,7 +86,7 @@ def task():
     def cb(val):
         print('Poll callback!')
         print(val);
-    ph = Ph(loop)
+    ph = EC(loop)
     ph.poll(5, cb)
     yield from asyncio.sleep(15)
     ph.cancel()

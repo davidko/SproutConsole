@@ -69,12 +69,15 @@ class Database() :
         print(query)
         self.cursor.execute(query)
 
+    def close(self):
+        self.con.commit()
+        self.con.close()
+
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
-        self.con.commit()
-        self.con.close()
+        self.close()
 
 
 if __name__ == '__main__':
